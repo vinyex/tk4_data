@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('isLogin');
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('isLogin');
 Route::post('/login-process', [LoginController::class, 'process'])->name('login-process');
 Route::any('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('checkAuth')->group(function () {
     Route::get('/coba', [HomeController::class, 'coba'])->name('coba');
-    Route::get('/home', fn () => view('home.index'));
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
